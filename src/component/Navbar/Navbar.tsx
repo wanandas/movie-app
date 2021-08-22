@@ -16,17 +16,15 @@ export function Navbar() {
   }, [state.movieIdList]);
   return (
     <NavbarContainer>
-      <Link to="/" style={{ textDecoration: "none" }}>
-        <NavMenu>HOME</NavMenu>
-      </Link>
-      <Link to="/cart">
-        <NavMenu>
-          <CountItemContainer>
-            <ShoppingCart size="lg" />
-            {count > 0 && <CountItem>{count}</CountItem>}
-          </CountItemContainer>
-        </NavMenu>
-      </Link>
+      <NavMenu to="/" style={{ textDecoration: "none" }}>
+        HOME
+      </NavMenu>
+      <NavMenu to="/cart">
+        <CountItemContainer>
+          <ShoppingCart size="lg" />
+          {count > 0 && <CountItem>{count}</CountItem>}
+        </CountItemContainer>
+      </NavMenu>
     </NavbarContainer>
   );
 }
@@ -55,7 +53,7 @@ const NavbarContainer = styled.nav`
   background-color: ${COLORS.PRIMARY};
 `;
 
-const NavMenu = styled.a`
+const NavMenu = styled(Link)`
   font-weight: 800;
   color: ${COLORS.WHITE};
   transition: 0.2s color ease-in;

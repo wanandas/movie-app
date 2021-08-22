@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { IResultMovie } from "../../function/getMovieData";
 import { addMovieId, MovieContext } from "../../store/MovieProvider";
@@ -30,7 +30,11 @@ export function MovieItemCard({ movie }: { movie: IResultMovie }) {
         </ImageContent>
         <Cart>
           <ShoppingCart
-            color={COLORS.PRIMARY}
+            color={
+              state.movieIdList.find((id) => id === movie.id)
+                ? COLORS.SECONDARY
+                : COLORS.PRIMARY
+            }
             size="sm"
             onClick={() => {
               dispatch(
