@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { IResultMovie } from "../../function/getMovieData";
 import { useCartMovie } from "../../function/hook/useCartMovie";
+import { MovieContext } from "../../store/MovieProvider";
 
 export default function CartPage() {
   const [cart, setCart] = useState<IResultMovie[]>([]);
   const { getMovieList } = useCartMovie();
+  const { state } = useContext(MovieContext);
 
   React.useEffect(() => {
     (async () => {
-      const movieList = await getMovieList();
+      const movieList = await getMovieList(state.movieIdList);
       setCart(movieList as IResultMovie[]);
     })();
 
@@ -18,7 +20,7 @@ export default function CartPage() {
   return (
     <div>
       {cart.map((movie) => {
-        return <div>{movie.id}</div>;
+        return <div>{movie.title}</div>;
       })}
     </div>
   );

@@ -1,25 +1,29 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { ShoppingCart } from "../../utils/icon";
 import { COLORS } from "../../utils/COLOR";
 import { Link } from "react-router-dom";
-import { useCartMovie } from "../../function/hook/useCartMovie";
+import { MovieContext } from "../../store/MovieProvider";
 
 export function Navbar() {
-  const { idsItem } = useCartMovie();
-  const [cartItem] = idsItem;
-  console.log(idsItem);
+  const { state } = useContext(MovieContext);
 
+  const [count, setCount] = useState(state.movieIdList.length);
+
+  useEffect(() => {
+    setCount(state.movieIdList.length);
+    localStorage.setItem("myMovieId", JSON.stringify(state.movieIdList));
+  }, [state.movieIdList]);
   return (
     <NavbarContainer>
       <Link to="/" style={{ textDecoration: "none" }}>
         <NavMenu>HOME</NavMenu>
       </Link>
-      <Link to="/cart" target="_self">
+      <Link to="/cart">
         <NavMenu>
           <CountItemContainer>
             <ShoppingCart size="lg" />
-            {cartItem.length > 0 && <CountItem>{cartItem.length}</CountItem>}
+            {count > 0 && <CountItem>{count}</CountItem>}
           </CountItemContainer>
         </NavMenu>
       </Link>

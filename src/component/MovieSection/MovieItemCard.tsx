@@ -1,16 +1,13 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { IResultMovie } from "../../function/getMovieData";
+import { addMovieId, MovieContext } from "../../store/MovieProvider";
 import { COLORS } from "../../utils/COLOR";
 import { ShoppingCart } from "../../utils/icon";
 
-export function MovieItemCard({
-  movie,
-  setToCart,
-}: {
-  movie: IResultMovie;
-  setToCart: React.Dispatch<React.SetStateAction<number[]>>;
-}) {
+export function MovieItemCard({ movie }: { movie: IResultMovie }) {
+  const { state, dispatch } = useContext(MovieContext);
+
   return (
     <MovieItemCardContainer>
       <Card>
@@ -36,13 +33,17 @@ export function MovieItemCard({
             color={COLORS.PRIMARY}
             size="sm"
             onClick={() => {
-              setToCart((cart) => {
-                if (cart.find((item) => movie.id === item)) {
-                  return [...cart];
-                } else {
-                  return [...cart, movie.id];
-                }
-              });
+              dispatch(
+                addMovieId(
+                  (() => {
+                    if (state.movieIdList.find((id) => id === movie.id)) {
+                      return [];
+                    } else {
+                      return [movie.id];
+                    }
+                  })()
+                )
+              );
             }}
           />
         </Cart>

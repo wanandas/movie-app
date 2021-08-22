@@ -6,11 +6,9 @@ import { MovieItemCard } from "./MovieItemCard";
 export function MovieiItems({
   query = "a",
   page,
-  setCardIdList,
 }: {
   query?: string;
   page: number;
-  setCardIdList: React.Dispatch<React.SetStateAction<number[]>>;
 }) {
   const [movielist, setMovielist] = useState<IResultMovie[]>([]);
 
@@ -31,13 +29,7 @@ export function MovieiItems({
     <MovieContainer>
       {movielist &&
         movielist.map((movie) => {
-          return (
-            <MovieItemCard
-              key={movie.id}
-              movie={movie}
-              setToCart={setCardIdList}
-            />
-          );
+          return <MovieItemCard key={movie.id} movie={movie} />;
         })}
     </MovieContainer>
   );

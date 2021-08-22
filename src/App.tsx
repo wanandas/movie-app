@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Navbar } from "./component/Navbar/Navbar";
 import CartPage from "./pages/Cart/CartPage";
 import Home from "./pages/Home/Home";
+import { MovieProvider } from "./store/MovieProvider";
 
 function App() {
   return (
