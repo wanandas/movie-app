@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { MovieiItems } from "../../component/MovieSection/MovieItems";
 import { Searchbar } from "../../component/Searchbar";
-import { useCartMovie } from "../../function/hook/useCartMovie";
-import { MovieProvider } from "../../store/MovieProvider";
 
 export default function Home() {
   // do it later
