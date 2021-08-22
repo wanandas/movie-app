@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { ShoppingCart } from "../../utils/icon";
-import { COLORS } from "../../utils/icon/COLOR";
+import { COLORS } from "../../utils/COLOR";
 
 export function Navbar() {
   return (
