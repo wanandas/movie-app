@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
+import { Modal } from "../../component/Modal";
 import { IResultMovie } from "../../function/getMovieData";
 import { useCartMovie } from "../../function/hook/useCartMovie";
 import {
@@ -43,8 +44,7 @@ export default function CartPage() {
 
   return (
     <Contain>
-      <h1 style={{ textAlign: "center" }}>ALL USERS</h1>
-
+      <h2 style={{ textAlign: "center" }}>Shopping Cart</h2>
       <div
         style={{
           textAlign: "center",
@@ -117,36 +117,63 @@ export default function CartPage() {
               <td>Totle</td>
               <td>${handlePrice(cart)}</td>
             </tr>
-            {cart.length > 0 && (
-              <tr style={{ marginTop: "2rem" }}>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>
-                  <Anchor
-                    onClick={() => {
-                      dispatch(deleteAllMovieId());
-                    }}
-                  >
-                    delete all
-                  </Anchor>
-                </td>
-                <td></td>
-              </tr>
-            )}
           </tfoot>
         </table>
+      </div>
+      <div
+        style={{
+          marginTop: "2rem",
+          display: "flex",
+          justifyContent: "flex-end",
+          gap: " 1rem",
+          flexDirection: "row",
+          padding: "0 1rem",
+        }}
+      >
+        <div>
+          <DeleteButton
+            onClick={() => {
+              dispatch(deleteAllMovieId());
+            }}
+          >
+            delete all
+          </DeleteButton>
+        </div>{" "}
+        <div>
+          <Modal button={<ShopButton>buy</ShopButton>} />
+        </div>
       </div>
     </Contain>
   );
 }
+
+const ShopButton = styled.a`
+  padding: 0.5rem 0.5rem;
+  width: 100%;
+  border: 2px solid ${COLORS.PRIMARY};
+  color: ${COLORS.PRIMARY};
+  cursor: pointer;
+  &:hover {
+    color: #ffffff;
+    background-color: ${COLORS.PRIMARY};
+  }
+`;
+
+const DeleteButton = styled(ShopButton)`
+  color: red;
+  border: 2px solid red;
+  &:hover {
+    color: #ffffff;
+    background-color: red;
+  }
+`;
 
 const Contain = styled.div`
   text-transform: uppercase;
   box-sizing: border-box;
   min-width: 100%;
   padding: 2rem 0;
-
+  color: ${COLORS.PRIMARY};
   & td {
     &:nth-child(1) {
       display: none;
@@ -156,6 +183,17 @@ const Contain = styled.div`
     &:nth-child(1) {
       display: none;
     }
+  }
+
+  & h3 {
+    font-size: 12px;
+  }
+
+  & p {
+    font-size: 12px;
+  }
+  & a {
+    font-size: 12px;
   }
 
   @media (min-width: 768px) {
@@ -173,6 +211,17 @@ const Contain = styled.div`
   }
   @media (min-width: 1024px) {
     padding: 2rem 15%;
+
+    & h3 {
+      font-size: 1.25rem;
+    }
+
+    & p {
+      font-size: 1rem;
+    }
+    & a {
+      font-size: 1rem;
+    }
   }
 `;
 

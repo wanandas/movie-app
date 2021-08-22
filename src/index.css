@@ -8,6 +8,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
   letter-spacing: 0.035em;
+  color: #0d253f;
 }
 
 code {
