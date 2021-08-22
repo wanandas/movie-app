@@ -15,6 +15,23 @@ export default function CartPage() {
   const { getMovieList } = useCartMovie();
   const { state, dispatch } = useContext(MovieContext);
 
+  const handlePrice = (cart: any[]) => {
+    const countMovie = cart.length;
+    const price = countMovie * 100;
+
+    if (countMovie > 5) {
+      const discount = countMovie * 100 * (20 / 100);
+      return price - discount;
+    }
+
+    if (countMovie > 3) {
+      const discount = countMovie * 100 * (10 / 100);
+      return price - discount;
+    }
+
+    return price;
+  };
+
   React.useEffect(() => {
     (async () => {
       const movieList = await getMovieList(state.movieIdList);
@@ -28,7 +45,13 @@ export default function CartPage() {
     <Contain>
       <h1 style={{ textAlign: "center" }}>ALL USERS</h1>
 
-      <div style={{ textAlign: "center", borderBottom: "1px solid #111111" }}>
+      <div
+        style={{
+          textAlign: "center",
+          borderBottom: "1px solid #111111",
+          padding: "2rem 0",
+        }}
+      >
         <table width="100%">
           <thead>
             <tr style={{ alignContent: "center" }}>
@@ -86,16 +109,33 @@ export default function CartPage() {
               );
             })}
           </tbody>
+          <tfoot>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>Totle</td>
+              <td>${handlePrice(cart)}</td>
+            </tr>
+            {cart.length > 0 && (
+              <tr style={{ marginTop: "2rem" }}>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                  <Anchor
+                    onClick={() => {
+                      dispatch(deleteAllMovieId());
+                    }}
+                  >
+                    delete all
+                  </Anchor>
+                </td>
+                <td></td>
+              </tr>
+            )}
+          </tfoot>
         </table>
-      </div>
-      <div style={{ textAlign: "end", margin: ".5rem 1rem" }}>
-        <Anchor
-          onClick={() => {
-            dispatch(deleteAllMovieId());
-          }}
-        >
-          delete all
-        </Anchor>
       </div>
     </Contain>
   );
