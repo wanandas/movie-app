@@ -5,10 +5,6 @@ import { COLORS } from "../../utils/COLOR";
 import { ShoppingCart } from "../../utils/icon";
 
 export function MovieItemCard({ movie }: { movie: IResultMovie }) {
-  React.useEffect(() => {
-    console.log(movie);
-  }, []);
-
   return (
     <MovieItemCardContainer>
       <Card>
