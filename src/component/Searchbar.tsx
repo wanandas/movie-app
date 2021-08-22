@@ -21,6 +21,7 @@ const SearchbarContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin: 2rem auto;
+  border-radius: 0.5rem;
   background-color: ${COLORS.GREY};
 `;
 
@@ -31,6 +32,7 @@ const SearchbarInput = styled.input`
   font-size: 1rem;
   padding: 1rem;
   font-weight: 600;
+  border-radius: 0.5rem;
   outline: none;
 `;
 

@@ -18,7 +18,7 @@ export function MovieiItems() {
     <MovieContainer>
       {movielist &&
         movielist.map((movie) => {
-          return <MovieItemCard key={movie.id} cover={movie.poster_path} />;
+          return <MovieItemCard key={movie.id} movie={movie} />;
         })}
     </MovieContainer>
   );
@@ -26,13 +26,11 @@ export function MovieiItems() {
 
 const MovieContainer = styled.div`
   display: grid;
+  row-gap: 1.5rem;
   grid-template-columns: repeat(2, 1fr);
+
   @media (min-width: 768px) {
-    width: 90%;
-    grid-template-columns: repeat(3, 1fr);
-    margin: 0 auto;
-  }
-  @media (min-width: 1024px) {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+    margin: 0 10%;
   }
 `;
