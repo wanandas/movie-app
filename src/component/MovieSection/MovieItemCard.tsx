@@ -4,7 +4,13 @@ import { IResultMovie } from "../../function/getMovieData";
 import { COLORS } from "../../utils/COLOR";
 import { ShoppingCart } from "../../utils/icon";
 
-export function MovieItemCard({ movie }: { movie: IResultMovie }) {
+export function MovieItemCard({
+  movie,
+  setToCart,
+}: {
+  movie: IResultMovie;
+  setToCart: React.Dispatch<React.SetStateAction<number[]>>;
+}) {
   return (
     <MovieItemCardContainer>
       <Card>
@@ -12,7 +18,7 @@ export function MovieItemCard({ movie }: { movie: IResultMovie }) {
           <Cover>
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-              alt="cover Image"
+              alt="cover"
             />
           </Cover>
         </ImageCover>
@@ -26,7 +32,19 @@ export function MovieItemCard({ movie }: { movie: IResultMovie }) {
           </p>
         </ImageContent>
         <Cart>
-          <ShoppingCart color={COLORS.PRIMARY} size="sm" />
+          <ShoppingCart
+            color={COLORS.PRIMARY}
+            size="sm"
+            onClick={() => {
+              setToCart((cart) => {
+                if (cart.find((item) => movie.id === item)) {
+                  return [...cart];
+                } else {
+                  return [...cart, movie.id];
+                }
+              });
+            }}
+          />
         </Cart>
       </Card>
     </MovieItemCardContainer>
@@ -42,6 +60,7 @@ const Cart = styled.div`
   padding: 0.25rem;
   background-color: ${COLORS.WHITE};
   transition: 0.5s all ease-out;
+  cursor: pointer;
 `;
 
 const MovieItemCardContainer = styled.div`

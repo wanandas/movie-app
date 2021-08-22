@@ -3,22 +3,41 @@ import styled from "styled-components";
 import { getMovieData, IResultMovie } from "../../function/getMovieData";
 import { MovieItemCard } from "./MovieItemCard";
 
-export function MovieiItems() {
+export function MovieiItems({
+  query = "a",
+  page,
+  setCardIdList,
+}: {
+  query?: string;
+  page: number;
+  setCardIdList: React.Dispatch<React.SetStateAction<number[]>>;
+}) {
   const [movielist, setMovielist] = useState<IResultMovie[]>([]);
 
   React.useEffect(() => {
     (async () => {
-      const [data, err] = await getMovieData({ query: "a", page: 1 });
+      console.log("lodding");
+      const [data, err] = await getMovieData({
+        query: query.trim() === "" ? "a" : query.trim(),
+        page,
+      });
+      console.log("done");
       if (err) return;
       setMovielist(data.results);
     })();
-  });
+  }, [page, query]);
 
   return (
     <MovieContainer>
       {movielist &&
         movielist.map((movie) => {
-          return <MovieItemCard key={movie.id} movie={movie} />;
+          return (
+            <MovieItemCard
+              key={movie.id}
+              movie={movie}
+              setToCart={setCardIdList}
+            />
+          );
         })}
     </MovieContainer>
   );

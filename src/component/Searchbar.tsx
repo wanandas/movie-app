@@ -3,10 +3,21 @@ import styled from "styled-components";
 import { COLORS } from "../utils/COLOR";
 import { SearchIcon } from "../utils/icon";
 
-export function Searchbar() {
+export function Searchbar({
+  query,
+  setQuery,
+}: {
+  query?: string;
+  setQuery: (query: string) => void;
+}) {
   return (
     <SearchbarContainer>
-      <SearchbarInput />
+      <SearchbarInput
+        value={query}
+        onChange={(e) => {
+          setQuery(e.target.value);
+        }}
+      />
       <ContainSearchIcon>
         <SearchIcon width="100%" />
       </ContainSearchIcon>
@@ -39,7 +50,7 @@ const SearchbarInput = styled.input`
 const ContainSearchIcon = styled.div`
   text-align: center;
   cursor: pointer;
-  min-width: 10%;
+  padding: 1rem;
   transition: 0.2s color ease-in;
   &:hover {
     color: ${COLORS.TERTIARY};
