@@ -50,6 +50,7 @@ export function Modal({
             &times;
           </CloseBtn>
           <h2>Shopping</h2>
+          <h3>ราคารวมทั้งหมดคือ ${price} </h3>
           <h3>โอนเงินไปที่ xxx-x-xxxxx-x</h3>
           <h3>กรุณาโอนเงินภายใน {counter}</h3>
         </ModalContent>
