@@ -13,24 +13,25 @@ import { TimesIcon } from "../../utils/icon";
 
 export default function CartPage() {
   const [cart, setCart] = useState<IResultMovie[]>([]);
+
+  const [price, setPrice] = useState(0);
   const { getMovieList } = useCartMovie();
   const { state, dispatch } = useContext(MovieContext);
 
-  const handlePrice = (cart: any[]) => {
-    const countMovie = cart.length;
+  const handlePrice = (countMovie: number) => {
     const price = countMovie * 100;
 
     if (countMovie > 5) {
       const discount = countMovie * 100 * (20 / 100);
-      return price - discount;
+      return setPrice(price - discount);
     }
 
     if (countMovie > 3) {
       const discount = countMovie * 100 * (10 / 100);
-      return price - discount;
+      return setPrice(price - discount);
     }
 
-    return price;
+    return setPrice(price);
   };
 
   React.useEffect(() => {
@@ -38,6 +39,7 @@ export default function CartPage() {
       const movieList = await getMovieList(state.movieIdList);
       setCart(movieList as IResultMovie[]);
     })();
+    handlePrice(state.movieIdList.length);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.movieIdList]);
@@ -115,7 +117,7 @@ export default function CartPage() {
               <td></td>
               <td></td>
               <td>Totle</td>
-              <td>${handlePrice(cart)}</td>
+              <td>${price}</td>
             </tr>
           </tfoot>
         </table>
@@ -140,7 +142,7 @@ export default function CartPage() {
           </DeleteButton>
         </div>{" "}
         <div>
-          <Modal button={<ShopButton>buy</ShopButton>} />
+          <Modal price={price} button={<ShopButton>buy</ShopButton>} />
         </div>
       </div>
     </Contain>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { COLORS } from "../utils/COLOR";
 
@@ -6,14 +6,52 @@ interface Props {
   isActive: boolean;
 }
 
-export function Modal({ button }: { button: JSX.Element }) {
+export function Modal({
+  button,
+  price,
+}: {
+  button: JSX.Element;
+  price: number;
+}) {
   const [open, setOpen] = useState<boolean>(false);
+
+  const [counter, setCounter] = React.useState<number>(60);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCounter((pre) => pre - 1);
+    }, 1000);
+    if (counter === 0) setOpen(false);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [counter]);
+
   return (
     <>
-      <ContainButton onClick={() => setOpen(!open)}>{button}</ContainButton>
+      <ContainButton
+        onClick={() => {
+          clearInterval(counter);
+          setCounter(60);
+          setOpen(!open);
+        }}
+      >
+        {button}
+      </ContainButton>
       <ModalContainer isActive={open}>
         <ModalContent>
-          <CloseBtn onClick={() => setOpen(!open)}>&times;</CloseBtn>
+          <CloseBtn
+            onClick={() => {
+              clearInterval(counter);
+              setOpen(!open);
+              setCounter(60);
+            }}
+          >
+            &times;
+          </CloseBtn>
+          <h2>Shopping</h2>
+          <h3>โอนเงินไปที่ xxx-x-xxxxx-x</h3>
+          <h3>กรุณาโอนเงินภายใน {counter}</h3>
         </ModalContent>
       </ModalContainer>
     </>
@@ -53,6 +91,7 @@ const ModalContent = styled.div`
   background-color: #fefefe;
   margin: 50% auto; /* 15% from the top and centered */
   padding: 20px;
+  text-align: center;
   border-radius: 0.5rem;
   border: 1px solid ${COLORS.GREY};
   position: relative;
